@@ -67,5 +67,31 @@ router.delete("/deletejob/:id", async(req,res)=>{
 
 })
 
+
+router.get("/getbystatus", async(req,res)=>{
+
+    const userId= req.user.id;
+    const {status}= req.query;
+
+    let query= "select * from jobs where user_id=$1";
+    let values=[userId];
+
+    if(status)
+    {
+        query+=' and status=$2';
+        values.push(status);
+    }
+
+    try{
+        const result= await pool.query(query,values);
+        res.json(result.rows);
+    }catch(error)
+    {
+        console.log(error);
+        res.status(500).json({message:"unable to get jobs"});
+    }
+
+});
+
 module.exports=router;
 
