@@ -42,5 +42,30 @@ router.put("/updatejob/:id", async(req, res)=>{
 
 });
 
+router.delete("/deletejob/:id", async(req,res)=>{
+    const jobId= req.params.id;
+    const id= req.user.id;
+    try{
+    const result=await pool.query(
+    `
+    delete from jobs where id=$1 and user_id=$2 returning *
+    `, [jobId, id]
+    );
+
+    if(result.rows.length===0)
+    {
+        return res.status(404).json({message:"Job not found or unauthorized"});
+    }
+
+    res.json({message:"Job deleted successfully"});
+}catch(error)
+{
+    console.log(error);
+    res.status(500).json({message:"unable to delete job"});
+
+}
+
+})
+
 module.exports=router;
 
