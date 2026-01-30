@@ -13,3 +13,13 @@ exports.createJob= async (req, res)=>{
     res.status(201).json(result.rows[0]);
 
 };
+
+exports.getJobs= async(req,res)=>{
+    
+    const result= await pool.query("select * from jobs where user_id=$1",
+    [req.user.id]
+    );
+
+    res.json(result.rows);
+
+}
