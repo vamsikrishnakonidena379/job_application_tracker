@@ -78,7 +78,7 @@ router.get("/getbystatus", async(req,res)=>{
 
     if(status)
     {
-        query+=' and status=$2';
+        query+=' and lower(status)=lower($2)';
         values.push(status);
     }
 
