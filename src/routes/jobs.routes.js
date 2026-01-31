@@ -6,7 +6,7 @@ const {createJob, getJobs}= require("../controllers/jobs.controller");
 
 router.use(auth);
 router.post("/createjob",createJob);
-router.post("/getjobs",getJobs)
+router.get("/getjobs",getJobs)
 router.put("/updatejob/:id", async(req, res)=>{
 
     const jobId= req.params.id;

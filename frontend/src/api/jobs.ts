@@ -1,6 +1,6 @@
 import type {Job} from '../types/Job';
 
-const API_URL= "http://localhost:3000/api/jobs";
+const API_URL= "http://localhost:5000/api/jobs/getjobs";
 
 export const fetchJobs = async(): Promise<Job[]> =>{
     const res = await fetch(API_URL, {
