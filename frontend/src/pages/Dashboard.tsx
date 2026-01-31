@@ -5,10 +5,11 @@ import type { Job } from '../types/Job';
 export default function Dashboard(){
 
     const [jobs, setJobs]= useState<Job[]>([]);
+    const [status, setStatus]= useState<string>("");
 
     useEffect(()=>{
-        fetchJobs().then(setJobs);
-    },[]);
+        fetchJobs(status || undefined).then(setJobs);
+    },[status]);
 
 
     return(
