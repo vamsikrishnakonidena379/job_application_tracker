@@ -93,5 +93,21 @@ router.get("/getbystatus", async(req,res)=>{
 
 });
 
+router.put("/updatestatus/:id", async (req, res)=>{
+    const {status, company, role, notes}= req.body;
+    const result= await pool.query(
+        `Update jobs set
+        status=COALESCE($1,status),
+        company= COALESCE($2,company),
+        role=COALESCE($3,role),
+        notes=COALESCE($4,notes)
+        where id=$5 and user_id=$6
+        returning *;
+        `,[status, company,role,notes,req.params.id,req.user.id]
+    );
+
+    res.json(result.rows[0]);
+
+})
 module.exports=router;
 

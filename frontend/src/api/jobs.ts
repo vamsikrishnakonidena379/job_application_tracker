@@ -4,7 +4,7 @@ const API_URL= "http://localhost:5000/api/jobs/getbystatus";
 
 export const fetchJobs = async(status?: string): Promise<Job[]> =>{
 
-    const url = status ? `${API_URL}?status=${status.toLowerCase()}`:API_URL;
+    const url = status ? `${API_URL}?status=${status}`:API_URL;
     const res = await fetch(url, {
         headers:{
             Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -22,3 +22,16 @@ export const fetchJobs = async(status?: string): Promise<Job[]> =>{
 
 };
 
+export const updateJobStatus= async(
+    id:number,
+    status: string
+): Promise<void> =>{
+    await fetch(`http://localhost:5000/api/jobs/updatestatus/${id}`,{
+        method: 'PUT',
+        headers:{
+            'Content-Type':'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({status})
+    })
+}

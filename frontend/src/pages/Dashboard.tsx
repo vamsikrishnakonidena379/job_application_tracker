@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import { fetchJobs } from '../api/jobs';
+import { fetchJobs, updateJobStatus } from '../api/jobs';
 import type { Job } from '../types/Job';
 
 export default function Dashboard(){
@@ -29,7 +29,28 @@ export default function Dashboard(){
 
                  {jobs.map(job=>(
                     <div key={job.id}>
-                        {job.company} - {job.role} ({job.status})
+                        {job.company} - {job.role}
+                        
+                    <select 
+                     value={job.status}
+                     onChange={(e)=>{
+                        updateJobStatus(job.id,e.target.value).then(()=>{
+                            fetchJobs(status || undefined).then(setJobs);
+                        });
+                     }}
+                     >
+                      <option value="applied">Applied</option>
+                      <option value="interview">Interview</option>
+                      <option value="offer">Offer</option>
+                      <option value="rejected">Rejected</option>
+
+
+
+                     </select>
+
+
+
+
                     </div>
                  ))}
 
