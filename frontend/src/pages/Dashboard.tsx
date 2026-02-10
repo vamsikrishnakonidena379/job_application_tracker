@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import { fetchJobs, updateJobStatus } from '../api/jobs';
+import { fetchJobs, updateJobStatus, deletejob } from '../api/jobs';
 import type { Job } from '../types/Job';
 
 export default function Dashboard(){
@@ -47,6 +47,15 @@ export default function Dashboard(){
 
 
                      </select>
+                     <button
+                     onClick={()=>{
+                        const ok=window.confirm('Are you sure want to delete this job?');
+                        if(!ok) return
+                        
+                        deletejob(job.id).then(()=>{
+                            fetchJobs(status || undefined).then(setJobs);
+                        })
+                     }}>Delete</button>
 
 
 

@@ -109,5 +109,20 @@ router.put("/updatestatus/:id", async (req, res)=>{
     res.json(result.rows[0]);
 
 })
+
+router.delete("/delete/:id", async(req, res)=>{
+    const result= await pool.query(
+        'Delete from jobs where id=$1 and user_id=$2 returning *',
+        [req.params.id, req.user.id]
+    );
+
+    res.json({
+        messgae:"Job deleted succesfully",
+        job:result.rows
+    }
+    );
+
+
+})
 module.exports=router;
 

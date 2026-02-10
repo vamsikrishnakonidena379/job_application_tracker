@@ -35,3 +35,14 @@ export const updateJobStatus= async(
         body: JSON.stringify({status})
     })
 }
+
+export const deletejob= async(id:number): Promise<void> =>{
+    
+    await fetch(`http://localhost:5000/api/jobs/delete/${id}`,{
+        method:'DELETE',
+        headers:{
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+
+    })
+}
